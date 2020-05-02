@@ -678,4 +678,15 @@ describe('VDatePicker.ts', () => { // eslint-disable-line max-statements
     expect(input.mock.calls[1][0]).toEqual(expect.arrayContaining(['2019-01-06']))
     expect(change.mock.calls).toHaveLength(1)
   })
+
+  it('should handle date range picker with null value', async () => {
+    const wrapper = mountFunction({
+      propsData: {
+        range: true,
+        value: null,
+      },
+    })
+
+    expect(wrapper.find('.v-date-picker-title__date').html()).toMatchSnapshot()
+  })
 })
