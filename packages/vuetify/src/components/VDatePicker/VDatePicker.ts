@@ -10,15 +10,22 @@ import Localable from '../../mixins/localable'
 import Picker from '../../mixins/picker'
 
 // Utils
-import { pad, createNativeLocaleFormatter } from './util'
-import isDateAllowed from './util/isDateAllowed'
+import {
+  createItemTypeListeners,
+  createNativeLocaleFormatter,
+  pad,
+} from './util'
 import { consoleWarn } from '../../util/console'
+import isDateAllowed from './util/isDateAllowed'
 import { daysInMonth } from '../VCalendar/util/timestamp'
 import mixins from '../../util/mixins'
 import { wrapInArray } from '../../util/helpers'
 
 // Types
-import { PropType, PropValidator } from 'vue/types/options'
+import {
+  PropType,
+  PropValidator,
+} from 'vue/types/options'
 import { VNode } from 'vue'
 import {
   DatePickerFormatter,
@@ -130,7 +137,8 @@ export default mixins(
 
         const multipleValue = this.value ? wrapInArray(this.value) : []
         const date = ((this.multiple || this.range) ? multipleValue[multipleValue.length - 1] : this.value) ||
-          `${now.getFullYear()}-${now.getMonth() + 1}`
+          (typeof this.showCurrent === 'string' ? this.showCurrent : `${now.getFullYear()}-${now.getMonth() + 1}`)
+
         return sanitizeDateString(date as string, this.type === 'date' ? 'month' : 'year')
       })(),
     }
@@ -411,8 +419,7 @@ export default mixins(
         on: {
           input: this.dateClick,
           'update:table-date': (value: string) => this.tableDate = value,
-          'click:date': (value: string) => this.$emit('click:date', value),
-          'dblclick:date': (value: string) => this.$emit('dblclick:date', value),
+          ...createItemTypeListeners(this, ':date'),
         },
       })
     },
@@ -441,8 +448,7 @@ export default mixins(
         on: {
           input: this.monthClick,
           'update:table-date': (value: string) => this.tableDate = value,
-          'click:month': (value: string) => this.$emit('click:month', value),
-          'dblclick:month': (value: string) => this.$emit('dblclick:month', value),
+          ...createItemTypeListeners(this, ':month'),
         },
       })
     },
@@ -458,6 +464,7 @@ export default mixins(
         },
         on: {
           input: this.yearClick,
+          ...createItemTypeListeners(this, ':year'),
         },
       })
     },
