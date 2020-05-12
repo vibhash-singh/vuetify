@@ -10,16 +10,16 @@ import Localable from '../../mixins/localable'
 import Picker from '../../mixins/picker'
 
 // Utils
+import mixins from '../../util/mixins'
+import isDateAllowed from './util/isDateAllowed'
+import { wrapInArray } from '../../util/helpers'
+import { daysInMonth } from '../VCalendar/util/timestamp'
+import { consoleWarn } from '../../util/console'
 import {
   createItemTypeListeners,
   createNativeLocaleFormatter,
   pad,
 } from './util'
-import { consoleWarn } from '../../util/console'
-import isDateAllowed from './util/isDateAllowed'
-import { daysInMonth } from '../VCalendar/util/timestamp'
-import mixins from '../../util/mixins'
-import { wrapInArray } from '../../util/helpers'
 
 // Types
 import {
