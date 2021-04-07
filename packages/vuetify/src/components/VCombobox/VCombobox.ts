@@ -256,12 +256,12 @@ export default VAutocomplete.extend({
       if (pastedItemText && this.findExistingIndex(pastedItemText as any) === -1) {
         event.preventDefault()
         VSelect.options.methods.selectItem.call(this, pastedItemText as any)
-      },
-      clearableCallback () {
-        this.editingIndex = -1
-  
-        VAutocomplete.options.methods.clearableCallback.call(this)
-      },
+      }
+    },
+    clearableCallback () {
+      this.editingIndex = -1
+
+      VAutocomplete.options.methods.clearableCallback.call(this)
     },
   },
 })
